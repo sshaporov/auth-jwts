@@ -9,10 +9,13 @@ module.exports = {
             const options = {
                 expiresIn: '1h',
                 issuer: 'sergey shaporov',
-                audience: userId
+                audience: userId,
             }
             JWT.sign(payload, secret, options, (err, token) => {
-                if(err) reject(err)
+                if(err) {
+                    console.log(err.message)
+                    reject(createError.InternalServerError())
+                }
                 resolve(token)
             })
         })
