@@ -29,6 +29,18 @@ it("simple request with saving to db", async done => {
   done()
 })
 
+
+it("saved user data", async done => {
+  const response = await request(app).post('/auth/register').send({
+    email: "123@gmail.com",
+    password: "test"
+  })
+  expect(response.status).toBe(200)
+  expect(response.body.accessToken).toBeTruthy()
+  expect(response.body.refreshToken).toBeTruthy()
+  done()
+})
+
 afterAll(async () => {
   await mongoose.connection.close();
 });
