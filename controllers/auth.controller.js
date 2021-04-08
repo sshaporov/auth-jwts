@@ -22,7 +22,7 @@ module.exports = {
             res.send({accessToken, refreshToken})
 
         } catch (err) {
-            if(err.isJoi === true) error.status = 422
+            if(err.isJoi === true) err.status = 422
             next(err)
         }
     },
