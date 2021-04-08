@@ -23,9 +23,9 @@ it("simple request with saving to db", async done => {
     password: "test"
   })
   expect(response.status).toBe(200)
-  expect(response.body.email).toBeTruthy();
-  expect(response.body._id).toBeTruthy();
-  expect(response.body.password).toBeTruthy();
+  expect(response.body.email).toBeTruthy()
+  expect(response.body._id).toBeTruthy()
+  expect(response.body.password).toBeTruthy()
   done()
 })
 

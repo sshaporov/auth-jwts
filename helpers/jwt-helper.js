@@ -1,7 +1,7 @@
 const JWT = require('jsonwebtoken')
 const createError = require('http-errors')
 const client = require('./init-redis')
-
+require('dotenv').config()
 
 module.exports = {
     signAccessToken: (userId) => {
