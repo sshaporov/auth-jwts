@@ -13,32 +13,40 @@ beforeAll(async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-   })
-});
-
-it("simple request with saving to db", async done => {
-  const response = await request(app).post('/auth/test').send({
-    email: "3@gmail.com",
-    password: "test"
   })
-  expect(response.status).toBe(200)
-  expect(response.body.email).toBeTruthy()
-  expect(response.body._id).toBeTruthy()
-  expect(response.body.password).toBeTruthy()
-  done()
+  const collection = mongoose.connection.collections['users']
+  await collection.deleteMany()
 })
 
+describe('User can successfully login', () => {
+    let response;
 
-it("saved user data", async done => {
-  const response = await request(app).post('/auth/register').send({
-    email: "123@gmail.com",
-    password: "test"
-  })
-  expect(response.status).toBe(200)
-  expect(response.body.accessToken).toBeTruthy()
-  expect(response.body.refreshToken).toBeTruthy()
-  done()
-})
+    beforeAll(async () => {
+      response = await request(app).post('/auth/register').send({
+        email: "test_email@test.com",
+        password: "pass"
+      })
+    })
+
+    it("Get 200 status code", () => {
+      expect(response.status).toBe(200)
+    })
+
+    it("Access token exist in response body", () => {
+      expect(response.body.accessToken).toBeTruthy()
+    })
+
+    it("Access token is type of String", () => {
+      expect(typeof response.body.accessToken === 'string').toBeTruthy()
+    })
+
+    it("Refresh token exist in response body", () => {
+      expect(response.body.refreshToken).toBeTruthy()
+    })
+
+    it("Refresh token is type of String", () => {
+      expect(typeof response.body.refreshToken === 'string').toBeTruthy()})
+    })
 
 afterAll(async () => {
   await mongoose.connection.close();
