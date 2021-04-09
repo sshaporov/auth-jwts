@@ -9,8 +9,7 @@ app.use(express.json())
 app.use('/auth', authRoute)
 
 beforeAll(async () => {
-  const url = `mongodb+srv://admin:Passw0rd@cluster0.c728u.mongodb.net/auth-tokens-test?retryWrites=true&w=majority`;
-  await mongoose.connect(url, {
+  await mongoose.connect(process.env.MONGODB_URI_TEST, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
