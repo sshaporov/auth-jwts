@@ -9,7 +9,7 @@ app.use(express.json())
 app.use('/auth', authRoute)
 
 beforeAll(async () => {
-  await mongoose.connect(process.env.MONGODB_URI_TEST, {
+  await mongoose.connect('mongodb+srv://admin:Passw0rd@cluster0.c728u.mongodb.net/auth-tokens-test-register?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -18,12 +18,12 @@ beforeAll(async () => {
   await collection.deleteMany()
 })
 
-describe('User can successfully login', () => {
+describe('User can successfully register', () => {
     let response;
 
     beforeAll(async () => {
       response = await request(app).post('/auth/register').send({
-        email: "test_email@test.com",
+        email: "test_registration_email@test.com",
         password: "pass"
       })
     })
