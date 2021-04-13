@@ -10,7 +10,7 @@ app.use(express.json())
 app.use('/auth', authRoute)
 
 beforeAll(async () => {
-  await mongoose.connect('mongodb+srv://admin:Passw0rd@cluster0.c728u.mongodb.net/auth-tokens-test-login?retryWrites=true&w=majority', {
+  await mongoose.connect('mongodb+srv://admin:Passw0rd@cluster0.c728u.mongodb.net/auth-tokens-test-refresh-token?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -20,19 +20,19 @@ beforeAll(async () => {
 
 // add test data to DB
   const user = new User({
-      email: "test_login_refresh_token@test.com",
+      email: "test_refresh_token@test.com",
       password: "pass"
   })
   const savedUser = await user.save()
 })
 
-describe('User can successfully log in', () => {
+describe('User can successfully refresh token', () => {
     let loginResponse
 
     beforeAll(async () => {
 
       loginResponse = await request(app).post('/auth/login').send({
-        email: "test_login_refresh_token@test.com",
+        email: "test_refresh_token@test.com",
         password: "pass",
       })
 
@@ -58,12 +58,13 @@ describe('User can successfully log in', () => {
     })
 
     it("Refresh token is type of String", () => {
-      expect(typeof refreshTokenResponse.body.refreshToken === 'string').toBeTruthy()})
+      expect(typeof refreshTokenResponse.body.refreshToken === 'string').toBeTruthy()
     })
+  })
 
 afterAll(async () => {
   await mongoose.connection.close()
-});
+})
 
 
 
