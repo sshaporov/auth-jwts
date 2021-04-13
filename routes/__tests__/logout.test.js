@@ -36,8 +36,6 @@ describe('User can successfully log out', () => {
         password: "pass",
       })
 
-      console.log(loginResponse.body.refreshToken)
-
       logoutResponse = await request(app).delete('/auth/logout').send({
         refreshToken: loginResponse.body.refreshToken,
       })
